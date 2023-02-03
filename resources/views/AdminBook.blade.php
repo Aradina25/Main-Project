@@ -45,7 +45,6 @@
                 <li style="margin-left:-5px;"><div class="row"><img src="images/adminavatar.png" id="pro-pic" style="margin-left:10px">&nbsp&nbsp<a><p style="margin-top:20px">{{$user->fullname}}</p></a></div></li>
                 <li  id="db"><a href="/adminDashboard">DASHBOARD</a></li>
                 <li  id="book"><a href="/adbook">BOOK</a></li>
-                <li  id="author"><a href="/adauthor">AUTHOR</a></li>
                 <li  id="member"><a href="/admembers">MEMBERS</a></li>
                 <li  id="order"><a>ORDERS</a></li>
                 <li id="Logout"><a href="/logout">LOG OUT</a></li>

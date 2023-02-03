@@ -186,12 +186,4 @@ class AdBookController extends Controller
         }
     }
 
-    public function orderdet($Id){
-        if(Session::has('loginId')){
-            $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
-            $user = tblregistration::where('userid',$data->userid)->first();
-            $odet = tblorder::where('orderid',$Id)->first();
-            return view('adMemOrder', compact('user','odet'));
-        }
-    }
 }

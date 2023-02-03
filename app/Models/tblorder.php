@@ -14,6 +14,6 @@ class tblorder extends Model
         return $this->belongsTo(tblregistration::class,'userid','userid');
     }
     public function ship(){
-        return $this->belongsTo(tblshippingaddress::class,'Shippingid','shippingid');
+        return $this->belongsTo(tblshippingaddress::class,'shippingid','Shippingid');
     }
 }

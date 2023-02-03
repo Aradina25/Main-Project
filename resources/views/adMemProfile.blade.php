@@ -1,6 +1,6 @@
 
 <head>
-    <title>adminDasboard</title>
+    <title>MEMBER MANAGEMENT</title>
     <link rel="stylesheet" type="text/css" href="{{asset('addash.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="jquery-3.6.0.min.js"></script>
@@ -41,7 +41,6 @@
                 <li style="margin-left:-5px;"><div class="row"><img src="{{asset('images/adminavatar.png')}}" id="pro-pic" style="margin-left:10px">&nbsp&nbsp<a><p style="margin-top:20px">{{$user->fullname}}</p></a></div></li>
                 <li  id="db"><a href="/adminDashboard">DASHBOARD</a></li>
                 <li  id="book"><a href="/adbook">BOOK</a></li>
-                <li  id="author"><a href="/adauthor">AUTHOR</a></li>
                 <li  id="member"><a href="#">MEMBERS</a></li>
                 <li  id="order"><a>ORDERS</a></li>
                 <li id="Logout"><a href="/logout">LOG OUT</a></li>
@@ -150,14 +149,15 @@
         <tr>
             <th>Order ID</th>
             <th>Amount</th>
+            <th>PLACED TIME</th>
             <th>Status</th>
-            <th>Action</th>
         </tr>
         @if(count($memorders) > 0)
         @foreach($memorders as $o)
         <tr>
             <td>{{$o->orderid}}</td>
             <td>{{$o->paymentamt}}</td>
+            <td>{{$o->placed_at}}</td>
             @if($o->status==0)
             <td style="color:lightgreen">Completed</td>
             @elseif($o->status==1)
@@ -165,8 +165,6 @@
             @else
             <td style="color:cyan">Processing</td>
             @endif
-            
-                <td><button type="submit">VIEW</button></td>
         </tr>
         @endforeach
         @else

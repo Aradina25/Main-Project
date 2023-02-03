@@ -54,7 +54,7 @@ Route::match(array('GET','POST'),'/admembers',[AdBookController::class,'membersc
 Route::match(array('GET','POST'),'/admempro/{id}',[AdBookController::class,'memberspro'])->name('admempro')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/blck/{id}/{role}',[AdBookController::class,'block'])->name('blck')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/adorders',[AdBookController::class,'memorders'])->name('adorders')->middleware('isLoggedIn');
-Route::match(array('GET','POST'),'/admemord/{id}',[AdBookController::class,'orderdet'])->name('admemord')->middleware('isLoggedIn');
+
 //MEMBER ROUTES
 Route::view('/postmodule','mempostupload');
 Route::get('/memhome',[LoginController::class,'memhome'])->middleware('isLoggedIn');
