@@ -244,7 +244,6 @@ span{
     border-collapse: collapse;
     width:900px;
     text-align: center;
-    display: table;
 }
 
 #dashboard #view-order-tab th{
@@ -256,12 +255,7 @@ span{
     color:white;
     text-decoration: none;
 }
-#dashboard #view-order-tab tr{
-        display: table-cell;
-}
-#dashboard #view-order-tab tr td{
-    display: block;
+#dashboard #view-order-tab td{
     border-bottom:1px white solid;
     padding: 10px 20px;
-
 }

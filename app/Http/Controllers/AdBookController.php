@@ -191,7 +191,7 @@ class AdBookController extends Controller
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$data->userid)->first();
             $odet = tblorder::where('orderid',$Id)->first();
-            return view('adMemOrder', compact('odet'));
+            return view('adMemOrder', compact('user','odet'));
         }
     }
 }
