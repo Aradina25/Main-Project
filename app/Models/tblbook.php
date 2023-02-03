@@ -16,5 +16,7 @@ class tblbook extends Model
     public $sortable = ['title','author','genre'];
     public $timestamps=false;
 
-    
+    public function lib(){
+        return $this->belongsTo(tbllibrary::class,'accession_no','accession_no');
+    }
 }

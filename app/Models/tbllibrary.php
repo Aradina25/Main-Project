@@ -13,4 +13,5 @@ class tbllibrary extends Model
     public function products(){
         return $this->belongsTo(tblbook::class,'accession_no','accession_no');
     }
+    
 }
