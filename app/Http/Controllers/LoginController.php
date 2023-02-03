@@ -9,6 +9,7 @@ use App\Models\tblchallenge;
 use App\Models\tbllibrary;
 use App\Models\tblbook;
 use App\Models\tblfriend;
+use App\Models\tblorder;
 use App\Models\tblpost;
 use App\Models\tblpersonalstore;
 use App\Models\tblsuspention;
@@ -65,7 +66,8 @@ class LoginController extends Controller
             $data = array();
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$data->userid)->first();
-            return view('AdDashboard', compact('data','user'));
+            $order = tblorder::where('status',"<>",0)->get();
+            return view('AdDashboard', compact('data','user','order'));
         }       
     }
 
