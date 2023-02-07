@@ -41,12 +41,12 @@ class LoginController extends Controller
                     else if($user->status == 1)
                         return redirect('adminDashboard');
                     else if($user->status == 0)
-                        return back()->with('fail','Your account is blocked! Contact customercareblounge@gmail.com for more details.');
+                        return back()->with('fail','Your account is blocked! Check your mail for details.');
                     else if($user->status == 3){
                         $sus = tblsuspention::where('userid',$user->userid)->first();
                         $date = date_diff(date_create($sus->end_date),date_create($sus->created_at));
                         $day = $date->format('%a')-1;
-                        return back()->with('fail','Your account has been suspended for '.$day.' days !!');
+                        return back()->with('fail','Your account has been suspended for '.$day.' days !! Check your mail for details.');
                     }
                     else
                         return back()->with('fail','This email is not registered.');
