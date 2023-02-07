@@ -97,4 +97,6 @@ Route::match(array('GET','POST'),'/negothrift/{sellerid}/{storeid}',[MemBookCont
 Route::match(array('GET','POST'),'/currsale',[MemBookController::class,'currsale'])->name('currsale')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/sellernego/{Id}/{action}',[MemBookController::class,'sellernego'])->name('sellernego')->middleware('isLoggedIn');
 
-
+//bot
+use App\Http\Controllers\BotManController;
+ Route::match(['get', 'post'], 'botman', [BotManController::class, 'handle']);
