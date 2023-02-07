@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\AuthCheck;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\tblregistration;
 use App\Models\tbllogin;
@@ -137,6 +139,7 @@ class AdBookController extends Controller
         if(Session::has('loginId')){
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$id)->first();
+            $email = tbllogin::where('userid',$id)->first('email');
             $sus = tblsuspention::where('userid',$id)->first();
             if($user->status == 0 && $role==0){
                 tblregistration::where('userid',$id)->update(['status'=>2]);
@@ -146,23 +149,35 @@ class AdBookController extends Controller
             }
             elseif($user->status == 2 && $role==0){
                 tblregistration::where('userid',$id)->update(['status'=>0]);
+                Mail::send([],[],function($message) use($email){
+                    $message->to($email->email)->subject('Account Blocked')->setBody('Dear User <br> Your current member profile at Blounge.com has been blocked due to some suspicious activites.Our team will review the account soon and inform you the details. Until then we request your patience. <br> With regards<br> Team Blounge ','text/html');
+                });
             }
             elseif($user->status == 2 && $role==3){
                 if($sus->suspend == 2){
                     tblsuspention::where('userid',$id)->update(['suspend'=>3,'created_at'=>date('Y-m-d h:m:s'),'end_date'=>NULL]);
                     tblregistration::where('userid',$id)->update(['status'=>0]);
+                    Mail::send([],[],function($message) use($email){
+                        $message->to($email->email)->subject('Account Blocked')->setBody('Dear User <br> Your current member profile at Blounge.com has been suspended for the 3rd time due to some suspicious activites.Our team will review the account soon and inform you the details. Until then we request your patience. <br> With regards<br> Team Blounge ','text/html');
+                    });
                 }
                 else if($sus->suspend == 0){
                     $date = strtotime("+8 day");
                     $enddate = date('Y-m-d h:m:s',$date);
                     tblsuspention::where('userid',$id)->update(['suspend'=>1,'created_at'=>date('Y-m-d h:m:s'),'end_date'=>$enddate]);
                     tblregistration::where('userid',$id)->update(['status'=>3]);
+                    Mail::send([],[],function($message) use($email){
+                        $message->to($email->email)->subject('Account Suspended')->setBody('Dear User <br> Your current member profile at Blounge.com has been suspended due to some suspicious activites.You can log back into your profile after 7 days. <br> With regards<br> Team Blounge ','text/html');
+                    });
                 }
                 else if($sus->suspend == 1){
                     $date = strtotime("+15 day");
                     $enddate = date('Y-m-d h:m:s',$date);
                     tblsuspention::where('userid',$id)->update(['suspend'=>2,'created_at'=>date('Y-m-d h:m:s'),'end_date'=>$enddate]);
                     tblregistration::where('userid',$id)->update(['status'=>3]);
+                    Mail::send([],[],function($message) use($email){
+                        $message->to($email->email)->subject('Account Suspended')->setBody('Dear User <br> Your current member profile at Blounge.com has been suspended for the 2nd time due to some suspicious activites.You can log back into your profile after 14 days. <br> With regards<br> Team Blounge ','text/html');
+                    });
                 }
             }
             elseif($user->status == 3 && $role==0){
