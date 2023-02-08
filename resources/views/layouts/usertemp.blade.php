@@ -187,7 +187,7 @@
 </body>
 <!-- <link rel="stylesheet" type="text/css"
     href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css"> -->
-    <link rel="stylesheet" type="text/css" href="C:\wamp64\www\MainProject\Blounge\public\botman.css">
+    <!-- <link rel="stylesheet" type="text/css" href="C:\wamp64\www\MainProject\Blounge\public\botman.css"> -->
 <script>
     var botmanWidget = {
         title: 'Chatbot',
@@ -195,7 +195,7 @@
         bubbleBackground: '#530015',
         bubbleAvatarUrl: 'images/bot.png',
 aboutText: 'Write Something',
-introMessage: "✋ Hi! I'm Blithe The Cataloger"
+introMessage: "✋ Hi! I'm <b>Blithe The Cataloger</b>"
 };
 </script>
 
