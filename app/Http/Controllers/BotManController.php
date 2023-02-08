@@ -39,7 +39,7 @@ class BotManController extends Controller
       public function option($botman)
       {
 
-          $botman->ask('Choose from the following options for service<br> 1. Quote for the day <br> 2. Top 3 books on chart <br> 3. Rating of any books <br>(Only enter the option number)', function(Answer $answer) {
+          $botman->ask('Choose from the following options for service<br> 1. Quote for the day <br> 2. Top 3 books on chart <br> 3. Rating of any books <br> 4. File a complaint <br>(Only enter the option number)', function(Answer $answer) {
           $opt = $answer->getText();
           if($opt == '1'){
             $quote = Inspiring::quote();
@@ -57,7 +57,7 @@ class BotManController extends Controller
             }
             $this->say($toplist);
           }
-          else
+          elseif($opt == '3')
           {
             $book = tblbook::where('title','LIKE','%'."".'%')->orderBy('rating','DESC')->get();
             $booklist = "";
@@ -67,6 +67,14 @@ class BotManController extends Controller
                 $i++;
             }
             $this->say($booklist);
+          }
+          elseif($opt =='4')
+          {
+            $this->say("Send a mail to <a href='mailto:customarcareblounge@gmail.com'>customarcareblounge@gmail.com</a>");
+          }
+          else
+          {
+            $this->say("Wrong choice!! Type 'next' to continue");
           }
         });
 
