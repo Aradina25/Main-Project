@@ -9,7 +9,7 @@
             var date = new Date();
             var cYear= date.getFullYear();
             var cDate = date.getMonth();
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $("#dob").datepicker{
                     maxDate : new Date(cYear,cMonth,cDate);
                 }
