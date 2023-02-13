@@ -2,6 +2,7 @@
     <head>
         <title>BLounge</title>
         <link rel="stylesheet" type="text/css" href="index.css">
+        
     </head>
     <body>
         <header class="head">       
@@ -15,7 +16,12 @@
             </div>
         </header>
         <div id="mainscreen">
-            
+        <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+                            <script >
+                                function loadGoogleTranslate(){
+                                   new google.translate.TranslateElement("google_element");
+                                }
+                            </script>
             <div class="child" id="slider">
             <p style="font-size: 26px;">WHAT WILL YOU DISCOVER</p>
                 <div class="images">
@@ -37,10 +43,8 @@
                 <p style="font-size: 26px;"> WHO ARE WE</p>
                 <p>BLounge is place where all book lovers can come together, network and meet each other. Here you can share your ideas and thoughts about the books that you have read or any storylines you have in mind. </p>
                 <p>BLounge also provides variety of options to buy books on your TBR.You can sell your books on BLounge to your friends and even buy from them on negotiable rate. </p>
-              
             </div>
         </div>
-        
-        
+        <div id="google_element" style="text:color;"></div>
     </body>
 </html>
