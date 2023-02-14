@@ -81,6 +81,7 @@ Route::get('/generatePDF',[MemBookController::class,'generatePDF'])->middleware(
 
 
 //post management
+Route::match(array('GET','POST'),'/scan',[PostController::class,'scan']);
 Route::match(array('GET','POST'),'/postUpload',[PostController::class,'postUpload'])->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/editposts',[PostController::class,'editposts'])->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/deletepost/{postid}',[PostController::class,'deletepost'])->name('deletepost')->middleware('isLoggedIn');

@@ -72,4 +72,10 @@ class PostController extends Controller
     //         return view('', compact('user','data','profile
     //     }
     // }
+
+    public function scan(Request $req){
+            if($req->hasfile('postimage')){
+                $file = $req->file('postimage');
+            }
+        }
 }
