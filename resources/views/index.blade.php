@@ -22,7 +22,7 @@
                                    new google.translate.TranslateElement("google_element");
                                 }
                             </script>
-            <div class="child" id="slider">
+            <div class="child" id="slider" style="width:60%;">
             <p style="font-size: 26px;">WHAT WILL YOU DISCOVER</p>
                 <div class="images">
                     <input type="radio" name="slide" id="img1" checked>
@@ -40,11 +40,13 @@
                 </div>
             </div>
             <div class="child" id="about" >
-                <p style="font-size: 26px;"> WHO ARE WE</p>
-                <p>BLounge is place where all book lovers can come together, network and meet each other. Here you can share your ideas and thoughts about the books that you have read or any storylines you have in mind. </p>
-                <p>BLounge also provides variety of options to buy books on your TBR.You can sell your books on BLounge to your friends and even buy from them on negotiable rate. </p>
+            <p style="font-size: 26px;font-weight:bolder;color:darkgreen;"> SCAN YOUR BOOK COVER </p>
+                 <img src="images/scan3.jpg" width="200px" height="200px">
             </div>
         </div>
+                <!-- <p style="font-size: 26px;"> WHO ARE WE</p>
+                <p>BLounge is place where all book lovers can come together, network and meet each other. Here you can share your ideas and thoughts about the books that you have read or any storylines you have in mind. </p>
+                <p>BLounge also provides variety of options to buy books on your TBR.You can sell your books on BLounge to your friends and even buy from them on negotiable rate. </p> -->
         <div id="google_element" style="text:color;"></div>
     </body>
 </html>
