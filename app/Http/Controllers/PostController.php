@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\tblpost;
 use App\Models\tblregistration;
 use App\Models\tbllogin;
+use thiagoalessio\TesseractOCR\TesseractOCR;
 use Session;
 
 class PostController extends Controller
@@ -73,9 +74,14 @@ class PostController extends Controller
     //     }
     // }
 
-    public function scan(Request $req){
+    public function scanner(Request $req){
             if($req->hasfile('postimage')){
                 $file = $req->file('postimage');
+                // $path = $request->file('postimage')->store('carrier_logo');
             }
+            // echo $file;
+            $tess = new TesseractOCR();
+            $text = (new TesseractOCR('C:\wamp64\www\MainProject\Blounge\public\images\baw.png'))->executable('C:\Program Files (x86)\Tesseract-OCR\tesseract.exe')->lang('eng')->run();
+            echo $text;
         }
 }

@@ -50,17 +50,14 @@
             <div class="child" id="about" style="margin-left:70px;margin-top:50px;">
                 <p style="font-size: 26px;font-weigth:bolder;color:darkgreen;"> SCAN YOUR BOOK COVER</p>
                 <center>
-                <form action="/postUpload" method="POST" enctype="multipart/form-data"> 
-                @csrf
+                <form action="scan" method="POST" enctype="multipart/form-data"> 
+                    @csrf
                     <label for="file-input">
-                    <span id="errcp"></span><br><img src="images/scan.jpg" width="200px" heigth="200px" style="margin-top:50px;"  name="upload-icon" id="upload">
+                    <span id="errcp"></span><br><img src="images/scan3.jpg" width="200px" heigth="200px" style="margin-top:50px;"  name="upload-icon" id="upload">
                     <input type="file" id="file-input" name="postimage" onchange="fileValidation()">
                     </label>
+                    <button type="submit" class="btn btn-primary" id="upload-btn">UPLOAD</button>
                 </form>
-                    <!-- <label for="file-input">    
-                    <span id="errcp"></span><br>
-                    <input type="file" id="file-input" name="postimage" onchange="fileValidation()">
-                    </label> -->
                 </center>
                 <!-- <p>BLounge is place where all book lovers can come together, network and meet each other. Here you can share your ideas and thoughts about the books that you have read or any storylines you have in mind. </p>
                 <p>BLounge also provides variety of options to buy books on your TBR.You can sell your books on BLounge to your friends and even buy from them on negotiable rate. </p>  -->
