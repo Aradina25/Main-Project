@@ -7,6 +7,7 @@ use App\Models\tblpost;
 use App\Models\tblregistration;
 use App\Models\tbllogin;
 use thiagoalessio\TesseractOCR\TesseractOCR;
+use App\Models\tblbook;
 use Session;
 
 class PostController extends Controller
@@ -80,8 +81,10 @@ class PostController extends Controller
                 // $path = $request->file('postimage')->store('carrier_logo');
             }
             // echo $file;
-            $tess = new TesseractOCR();
             $text = (new TesseractOCR('C:\wamp64\www\MainProject\Blounge\public\images\baw.png'))->executable('C:\Program Files (x86)\Tesseract-OCR\tesseract.exe')->lang('eng')->run();
             echo $text;
+            $search = tblbook::where('title','like','%Master of the Game%')->first();
+            echo $search;
+            
         }
 }
