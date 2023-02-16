@@ -82,9 +82,10 @@ class PostController extends Controller
             }
             // echo $file;
             $text = (new TesseractOCR('C:\wamp64\www\MainProject\Blounge\public\images\baw.png'))->executable('C:\Program Files (x86)\Tesseract-OCR\tesseract.exe')->lang('eng')->run();
-            echo $text;
-            $search = tblbook::where('title','like','%Master of the Game%')->first();
-            echo $search;
+            // echo $text;
+            $viewbook = tblbook::where('title','like','%Master of the Game%')->first();
+            return view('scanbook', compact('viewbook'));
+            // echo $search;
             
         }
 }

@@ -96,8 +96,14 @@
 <body>
 
       <!-- ======= Header ======= -->
+      <script src="http://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+                            <script >
+                                function loadGoogleTranslate(){
+                                   new google.translate.TranslateElement("google_element");
+                                }
+                            </script>
+                            
 <header id="header" class="header fixed-top d-flex align-items-center">
-
     <div class="d-flex align-items-center justify-content-between">
         <h2>BLOUNGE</h2>
     </div><!-- End Logo -->

@@ -36,6 +36,7 @@
             <img src="{{ asset('images/yourstore.jpg')}}" id="store" class="icon" alt="yourstore" style="margin-top:30%;"><br>
             <a href="" data-toggle="modal" data-target="#yourstoremodal"><b>Your Store</b></a><br>
         </div>
+        <div id="google_element" style="margin-top:25px;"></div>       
 </div>
 
 </body>

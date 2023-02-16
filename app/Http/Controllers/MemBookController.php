@@ -303,8 +303,9 @@ class MemBookController extends Controller
         }
         $order->save();
         $orders = tblorder::where('userid',$user->userid)->where('status',1)->first();
-        return redirect('/paymentprocess');
-        // return view('orderconfirmation',compact('user','ship','cart','orders'));
+        // return redirect('/paywithpaypal');
+        // return redirect('/paymentprocess');
+        return view('orderconfirmation',compact('user','ship','cart','orders'));
     }
 
     public function generatePDF(){

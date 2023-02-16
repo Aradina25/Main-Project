@@ -361,7 +361,7 @@
                     </div>
                     
                 </div>
-                <div>
+                <!-- <div>
                     <img src="images/like.png" id="img" style="width:25px;height:25px;" onclick="like()">
                     <script>
                         function like(){
@@ -375,7 +375,8 @@
                     <img src="images/comment.png" style="width:25px;height:25px;margin-left:30px;">
                     <img src="images/share.png" style="width:25px;height:25px;margin-left:30px;">
                     <!-- <img src="images/unsave.webp" style="width:25px;height:25px;margin-left:500px;"> -->
-                </div>
+                <!-- </div> -->
+                <!-- <a href="">Trans</a> -->
             </article>
         @endforeach   
         <!-- </div> -->

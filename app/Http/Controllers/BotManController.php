@@ -24,7 +24,7 @@ class BotManController extends Controller
           }
           else
           {
-            $botman->reply("Type 'next' to continue...");
+            $botman->reply("Command not identified!! Type 'next' to continue...");
           }
        });
 

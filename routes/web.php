@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\friendController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Middleware\AuthCheck;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -101,3 +102,9 @@ Route::match(array('GET','POST'),'/sellernego/{Id}/{action}',[MemBookController:
 //bot
 use App\Http\Controllers\BotManController;
  Route::match(['get', 'post'], 'botman', [BotManController::class, 'handle']);
+
+ //paypal
+ Route::match(array('GET','POST'),'/paywithpaypal',[PaypalController::class,'payWithPaypal']);
+//  Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'PaypalController@payWithPaypal',));
+Route::post('paypal', array('as' => 'paypal','uses' => 'PaypalController@postPaymentWithpaypal',));
+Route::get('paypal', array('as' => 'status','uses' => 'PaypalController@getPaymentStatus',));

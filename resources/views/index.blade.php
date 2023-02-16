@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>BLounge</title>
+    <link href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css')}}" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
         <link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
@@ -55,8 +57,8 @@
                     <label for="file-input">
                     <span id="errcp"></span><br><img src="images/scan3.jpg" width="200px" heigth="200px" style="margin-top:50px;"  name="upload-icon" id="upload">
                     <input type="file" id="file-input" name="postimage" onchange="fileValidation()">
-                    </label>
-                    <button type="submit" class="btn btn-primary" id="upload-btn">UPLOAD</button>
+                    </label><br><br>
+                    <button type="submit" class="btn btn-success" id="upload-btn">UPLOAD</button>
                 </form>
                 </center>
                 <!-- <p>BLounge is place where all book lovers can come together, network and meet each other. Here you can share your ideas and thoughts about the books that you have read or any storylines you have in mind. </p>
