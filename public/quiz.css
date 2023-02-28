@@ -5,9 +5,7 @@
 }
 
 body {
-  background-color: #b8c6db;
-
-    background-image: linear-gradient(to right, #ff5f6d     , #ffc371);
+    background-image: url("images/login.jpg");
   font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
@@ -52,7 +50,7 @@ ul li label {
 }
 
 button {
-      background-image: linear-gradient(to right, #ff5f6d     , #ffc371);
+  background-color: #530015 ;
   color: #fff;
   border: none;
   display: block;
@@ -64,11 +62,3 @@ button {
   font-weight: bold;
 }
 
-button:hover {
-  background-color: #732d91;
-}
-
-button:focus {
-  outline: none;
-  background-color: #5e3370;
-}

@@ -210,7 +210,7 @@
                             <!-- <li class="icons dropdown"> -->
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown" style="margin-left:400px;">
                                 <span class="activity active"></span>
-                                <img src="images/threedots.jpg" height="20" width="40" alt="options">
+                                <img src="{{ asset('images/threedots.jpg')}}" height="20" width="40" alt="options">
                             </div>
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
