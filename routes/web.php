@@ -9,7 +9,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\friendController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\PaypalController;
 use App\Http\Middleware\AuthCheck;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -67,7 +66,7 @@ Route::match(array('GET','POST'),'/listchallenge',[MemBookController::class,'lis
 Route::match(array('GET','POST'),'/markbook/{accId}/{stat?}',[MemBookController::class,'markbook'])->name('markbook')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/memviewbook/{id}',[MemBookController::class,'memviewbook'])->name('memviewbook')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/review/{bookid}',[MemBookController::class,'review'])->name('review')->middleware('isLoggedIn');
-
+Route::match(array('GET','POST'),'/quizfin/{accId}',[MemBookController::class,'quizfin'])->name('quizfin')->middleware('isLoggedIn');
 //cart
 Route::match(array('GET','POST'),'/cart',[MemBookController::class,'viewcart'])->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/buybook/{accId}/{stat?}',[MemBookController::class,'buybook'])->name('buybook')->middleware('isLoggedIn');
@@ -103,8 +102,3 @@ Route::match(array('GET','POST'),'/sellernego/{Id}/{action}',[MemBookController:
 use App\Http\Controllers\BotManController;
  Route::match(['get', 'post'], 'botman', [BotManController::class, 'handle']);
 
- //paypal
- Route::match(array('GET','POST'),'/paywithpaypal',[PaypalController::class,'payWithPaypal']);
-//  Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'PaypalController@payWithPaypal',));
-Route::post('paypal', array('as' => 'paypal','uses' => 'PaypalController@postPaymentWithpaypal',));
-Route::get('paypal', array('as' => 'status','uses' => 'PaypalController@getPaymentStatus',));

@@ -170,13 +170,6 @@
                     </tr>
                     <tr>
                         <td>{{$book->genre}} -
-                            @if($book->lib->status==1)
-                                <i><span style="color:blue">To Be Read</span></i>
-                            @elseif($book->lib->status==2)
-                                <i><span style="color:blue">Current Read</span></i>
-                            @else
-                                <i><span style="color:blue">Completed</span></i>
-                            @endif
                         </td>
                         <form action="{{route('memviewbook',$book->accession_no)}}" method="POST">
                         @csrf

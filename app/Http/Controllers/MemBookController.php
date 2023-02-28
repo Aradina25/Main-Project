@@ -19,6 +19,7 @@ use App\Models\tblpost;
 use App\Models\tblpersonalstore;
 use App\Models\tblthriftorder;
 use App\Models\tblreview;
+use App\Models\tblquiz;
 use App\Models\tblthriftnegotiate;
 use Stripe;
 use DB;
@@ -144,11 +145,17 @@ class MemBookController extends Controller
             $user = tblregistration::where('userid',$data->userid)->first();
             $liby = tbllibrary::where('userid',$user->userid)->where('status',$stat)->get();
             if(!$liby->contains('accession_no',$accId)){
-                tbllibrary::where('userid',$user->userid)->where('accession_no',$accId)->delete();
-                $lib->userid=$data->userid;
-                $lib->accession_no=$accId;
-                $lib->status=$stat;
-                $lib->save();
+                if($stat==3){
+                    $quiz = tblquiz::where('accession_no',$accId)->get();
+                    return view('quiz', compact('user','quiz','accId'));
+                }
+                else{
+                    tbllibrary::where('userid',$user->userid)->where('accession_no',$accId)->delete();
+                    $lib->userid=$data->userid;
+                    $lib->accession_no=$accId;
+                    $lib->status=$stat;
+                    $lib->save();
+                }
             }
             $challengecheck = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
             $librarycheck =  tbllibrary::where('userid',$user->userid)->where('status',3)->where('updated_at','>=',$challengecheck->Createdat)->get();
@@ -162,6 +169,17 @@ class MemBookController extends Controller
             return redirect()->back()->with('tbr','curr','done','librarycheck');
             // return view('MemViewSpecBook', compact('viewbook','user'));
         }
+    }
+    public function quizfin(Request $req, $accId){
+        $lib = new tbllibrary;
+        $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
+        $user = tblregistration::where('userid',$data->userid)->first();
+        tbllibrary::where('userid',$user->userid)->where('accession_no',$accId)->delete();
+        $lib->userid=$user->userid;
+        $lib->accession_no=$accId;
+        $lib->status=3;
+        $lib->save();
+        return $this->ownprofileview();
     }
 
     // challenge
