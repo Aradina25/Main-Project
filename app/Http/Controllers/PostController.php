@@ -8,6 +8,10 @@ use App\Models\tblregistration;
 use App\Models\tbllogin;
 use thiagoalessio\TesseractOCR\TesseractOCR;
 use App\Models\tblbook;
+use App\Models\tblreview;
+use App\Models\tblstock;
+use Illuminate\Support\Facades\Storage;
+use File;
 use Session;
 
 class PostController extends Controller
@@ -76,16 +80,36 @@ class PostController extends Controller
     // }
 
     public function scanner(Request $req){
-            if($req->hasfile('postimage')){
-                $file = $req->file('postimage');
-                // $path = $request->file('postimage')->store('carrier_logo');
-            }
-            // echo $file;
-            $text = (new TesseractOCR('C:\wamp64\www\MainProject\Blounge\public\images\baw.png'))->executable('C:\Program Files (x86)\Tesseract-OCR\tesseract.exe')->lang('eng')->run();
+        if($req->hasfile('postimage')){
+            $file = $req->file('postimage');
+            $extension = $file->getClientOriginalExtension();
+            $filename = "Random".time().".".$extension;
+            $file->move('posts',$filename);
+        }
+                    
+            $path = "posts/".$filename;
+            // $path = "images/kite.jpg";
+            // $text = (new TesseractOCR($path))->executable('C:\Program Files (x86)\Tesseract-OCR\tesseract.exe')->lang('eng')->run();
             // echo $text;
-            $viewbook = tblbook::where('title','like','%Master of the Game%')->first();
-            return view('scanbook', compact('viewbook'));
-            // echo $search;
+            $text = shell_exec("python seminar/scan.py $path");
+            $text = substr($text, 0, -1);
+            // echo $text;
+            $viewbook = tblbook::where('title','like', '%'.$text.'%')->first();
+            // echo $viewbook;
+            if( File::delete($path))
+            {
+                echo "done";
+            }
+            else{
+                echo $path;
+            }
+            $reviewtab = tblreview::where('bookid',$viewbook->accession_no)->get();
+            $pricehc = tblstock::where('accession_no',$viewbook->accession_no)->where('type','Hardcover')->first();
+            $pricepb = tblstock::where('accession_no',$viewbook->accession_no)->where('type','Paperback')->first();
+            $priceeb = tblstock::where('accession_no',$viewbook->accession_no)->where('type','EBook')->first();
             
+
+            return view('scanbook', compact('viewbook','reviewtab','pricehc','pricepb','priceeb'));
+        
         }
 }

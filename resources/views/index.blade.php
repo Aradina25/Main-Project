@@ -33,6 +33,7 @@
         <div id="mainscreen">
             
             <div class="child" id="slider" style="width:60%;">
+            <br><br>
             <p style="font-size: 26px;">WHAT WILL YOU DISCOVER</p>
                 <div class="images">
                     <input type="radio" name="slide" id="img1" checked>

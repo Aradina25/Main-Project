@@ -31,6 +31,7 @@ use PDF;
 class MemBookController extends Controller
 {
     public function ownprofileview(){
+        $chal = new tblchallenge;
         $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
         $user = tblregistration::where('userid',$data->userid)->first();
         $profile = tblprofilepicture::where('userid',$user->userid)->first();
@@ -43,7 +44,9 @@ class MemBookController extends Controller
             $width = ($challenge->completedgoal*100)/$challenge->goal;
         }
         $challengecheck = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
-        $librarycheck =  tbllibrary::where('userid',$user->userid)->where('status',3)->where('updated_at','>=',$challenge->Createdat)->get();
+        $librarycheck =  tbllibrary::where('userid',$user->userid)->where('status',3)->where('updated_at','>=',$challengecheck->Createdat)->get();
+        tblchallenge::where('userid',$user->userid)->where('status',1)->update(['completedgoal'=>count($librarycheck)]);
+        $chal->update();
         $tobesold = tblpersonalstore::where('userid',$user->userid)->where('status',1)->get();
         $soldbooks = tblpersonalstore::where('userid',$user->userid)->where('status',0)->get();
         // tblchallenge::where('userid',$user->userid)->where('status',1)->update(['completedgoal'=>count($librarycheck)]);
@@ -131,7 +134,7 @@ class MemBookController extends Controller
             $curr = tbllibrary::where('userid',$user->userid)->where('status',2)->get();
             $done = tbllibrary::where('userid',$user->userid)->where('status',3)->get(); 
             $reviewtab = tblreview::where('bookid',$accId)->get();
-            // echo $price;
+            // echo $challengecheck;
         }
         return view('MemViewSpecBook', compact('viewbook','user','width','challenge','tbr','curr','done','librarycheck','pricehc','pricepb','priceeb','thrift','tobesold','soldbooks','reviewtab'));
     }
@@ -147,6 +150,7 @@ class MemBookController extends Controller
             if(!$liby->contains('accession_no',$accId)){
                 if($stat==3){
                     $quiz = tblquiz::where('accession_no',$accId)->get();
+                    // echo $quiz;
                     return view('quiz', compact('user','quiz','accId'));
                 }
                 else{
@@ -179,6 +183,8 @@ class MemBookController extends Controller
         $lib->accession_no=$accId;
         $lib->status=3;
         $lib->save();
+        // $challengecheck = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
+        // $librarycheck =  tbllibrary::where('userid',$user->userid)->where('updated_at','>=',$challengecheck->Createdat)->get();
         return $this->ownprofileview();
     }
 
@@ -209,7 +215,7 @@ class MemBookController extends Controller
             $challenge = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
             $profile = tblprofilepicture::where('userid',$user->userid)->first();
             if($challenge->goal == $challenge->completedgoal){
-                tblprofilepicture::where('userid',$user->userid)->update(['level'=>$profile->level+1,'min'=>$profile->min+2]);
+                tblprofilepicture::where('userid',$user->userid)->update(['level'=>$profile->level+1,'min'=>$profile->min+2,'coins'=>$profile->coins+10]);
                 $pp->update();
                 tblchallenge::where('userid',$user->userid)->where('status',1)->update(['status'=>0]);
                 $chal->update();
@@ -218,7 +224,7 @@ class MemBookController extends Controller
                 $chal->save();
                 $post->userid = $id;
                 $post->image = "celeb.jpg";
-                $post->body= "Congratulations. You have completed the challenge. You have been upgraded to level ".($profile->level+1).".";
+                $post->body= "Congratulations. You have completed the challenge. You received 10 reward coins and been upgraded to level ".($profile->level+1).".";
                 $post->status = 0;
                 $post->save();
                 

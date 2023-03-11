@@ -55,15 +55,17 @@
                                 @if(Session::has('ming'))
                                 <div class="alert alert-danger" role="alert">{{Session::get('ming')}}</div>
                                 @endif
-                                <input type="number" id="goalsetter" name="goalsetter">
+                                <input type="number" id="goalsetter" name="goalsetter" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
                                 <button type="submit" class="btn btn-primary">Set</button>
                             </form>
                         @else
                         <div class="book-list">
                             <h6>Completed Books</h6>
+                            <tr>
                             @foreach($librarycheck as $book)
-                                <div><a href="{{route('memviewbook',$book->accession_no)}}"><img src="{{asset('coverpics/'.$book->products->cov_pic)}}" alt="{{$book->products->title}}" style="width:50px;height:60px;"></a></div>
+                                <td><a href="{{route('memviewbook',$book->accession_no)}}"><img src="{{asset('coverpics/'.$book->products->cov_pic)}}" alt="{{$book->products->title}}" style="width:50px;height:60px;"></a></td>
                             @endforeach
+                            </tr>
                         </div>
                     @endif
                         

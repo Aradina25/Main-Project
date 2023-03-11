@@ -9,6 +9,9 @@
 @section('curr',count($curr))
 @section('done',count($done))
 <head>
+<link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
    <style>
 
         #fixed-view{
@@ -27,6 +30,44 @@
 
         sup{
             color: red;
+        }
+        .rate {
+            float: left;
+            height: 30px;
+            padding: 0 10px;
+        }
+        .rate:not(:checked) > input {
+            position:absolute;
+            top:-9999px;
+        }
+        .rate:not(:checked) > label {
+            float:right;
+            width:1em;
+            overflow:hidden;
+            white-space:nowrap;
+            cursor:pointer;
+            font-size:20px;
+            color:#ccc;
+        }
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+        .rate > input:checked ~ label {
+            color: #ffc700;    
+        }
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+            color: #deb217;  
+        }
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+            color: #c59b08;
+        }
+        .checked {
+          color: #ffc700;
         }
 
    </style>
@@ -230,9 +271,16 @@
                 </div>
             </div>
             
-            <div id="rest-view">
+            <div id="rest-view" style="width:700px">
                 <h2>{{$viewbook->title}} - {{$viewbook->author}}</h2>
-                <h6>Rating : {{$viewbook->rating-1}}/5</h6>
+                @php($rate = $viewbook->rating)
+                @for($i = 0; $i < $rate; $i++)
+                <span class="fa fa-star checked" style="font-size:20px;"></span>
+                @endfor
+                @php($rate = 5-$viewbook->rating)
+                @for($i = 0; $i < $rate; $i++)
+                <span class="fa fa-star" style="font-size:20px;"></span>
+                @endfor
                 <p style="text-align: justify">{{$viewbook->summary}}</p>
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
@@ -281,17 +329,29 @@
                         </div>
                     </div>
                 </div>
-                <p><b>Enter your review</b></p>
+                <p><b>Rate and Review the book</b></p>
+                <p style="float:left;margin-top:5px;">Rate :</p>
                 <form action="{{route('review',$viewbook->accession_no)}}" method="POST">
                 @csrf
-                    Add your rating : <input type="number" max="5" min="1" style="margin-left:20px;" onKeyDown="return false" name="rating"><br><br>
-                    <textarea id="review" rows="5" cols="60 " name="review"></textarea><br><br>
-                    <button type="submit" class="btn btn-primary" style="margin-left:500px;">Enter</button>
+                    <div class="rate">
+                      <input type="radio" id="star5" name="rating" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rating" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rating" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rating" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rating" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div><br><br>
+                    <textarea id="review" rows="5" cols="75" name="review" placeholder=" Enter your review"></textarea><br><br>
+                    <button type="submit" class="btn btn-primary" style="width:700px;">Enter</button>
                 </form>
                 <br><br>
             @foreach($reviewtab as $posts)
             <article class="post">
-                <div class="card mb-3" style="width: 550px;">
+                <div class="card mb-3" style="width: 700px;">
                     <div class="row g-0">
                         <div class="col-md-4" style="width:80px;padding-top:10px;">
                             <image id="posts" src="{{ asset('profilepictures/'.$posts->pic->picture)}}" style="width:70px;height:70px;border-radius:50px;"><br>
@@ -301,7 +361,14 @@
                             <!-- <li class="icons dropdown"> -->
                                 <br>
                                 <p class="card-text"><small class="text-muted">{{$posts->details->fullname}}</small></p>
-                                <p class="card-text"> Rating : {{$posts->rating}}/5</p>
+                                @php($rate = $posts->rating)
+                                @for($i = 0; $i < $rate; $i++)
+                                <span class="fa fa-star checked" style="font-size:15px;"></span>
+                                @endfor
+                                @php($rate = 5-$posts->rating)
+                                @for($i = 0; $i < $rate; $i++)
+                                <span class="fa fa-star" style="font-size:15px;"></span>
+                                @endfor
                                 <p class="card-text">{{$posts->review}}</p>
                             </div>
                         </div>

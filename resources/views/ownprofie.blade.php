@@ -84,9 +84,11 @@
                         @else
                         <div class="book-list">
                             <h6>Completed Books</h6>
+                            <tr>
                             @foreach($librarycheck as $book)
-                                <div><a href="{{route('memviewbook',$book->accession_no)}}"><img src="{{asset('coverpics/'.$book->products->cov_pic)}}" alt="{{$book->products->title}}" style="width:50px;height:60px;"></a></div>
+                                <td><a href="{{route('memviewbook',$book->accession_no)}}"><img src="{{asset('coverpics/'.$book->products->cov_pic)}}" alt="{{$book->products->title}}" style="width:50px;height:60px;"></a></td>
                             @endforeach
+                            </tr>
                         </div>
                     @endif
                         
@@ -192,7 +194,8 @@
             <div style="display:inline-block;margin-left:5%;margin-top:5%;">
                 <h2>{{$user->fullname}}</h2>
                 <h5>{{$profile->bio}}</h5>
-                <p><b>Level : {{$profile->level}}</b></p>
+                <p style="float:left;"><b>Level : {{$profile->level}}</b></p>
+                <p style="margin-left:200px;"><b>Reward coins available : {{$profile->coins}}</b></p>
             </div>      
         </div>  
             @if(count($posts)>0)
