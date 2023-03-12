@@ -102,7 +102,7 @@
     <div class="py-2"> <span class="d-block text-muted">Order No</span> <span>BL{{$orders->orderid}}</span> </div>
     </td>
     <td>
-    <div class="py-2"> <span class="d-block text-muted">Payment</span> <span> COD </span> </div>
+    <div class="py-2"> <span class="d-block text-muted">Payment</span> <span> PayPal </span> </div>
     </td>
     <td>
     <div class="py-2"> <span class="d-block text-muted">Shipping Address</span> <span>{{$ship->firstname}} {{$ship->lastname}} <br> {{$ship->address}}<br> {{$ship->city}} {{$ship->zipcode}}<br> {{$ship->state}} {{$ship->country}}</span> </div>
@@ -122,7 +122,11 @@
     <div class="product-qty"> <span class="d-block">Type:{{$item->stocks->type}}</span></div>
     </td>
     <td width="20%">
+    @if($item->stocks->discount == 0)
     <div class="text-right"> <span class="font-weight-bold">₹{{$item->qty*$item->stocks->price}}</span> </div>
+    @else
+    <div class="text-right"> <span class="font-weight-bold"><s>₹{{$item->qty*$item->stocks->price}}</s> ₹{{($item->stocks->price)-(($item->stocks->discount*$item->stocks->price)/100)}}</span> </div>
+    @endif
     </td>
     </tr>
     @endforeach

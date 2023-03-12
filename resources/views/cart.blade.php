@@ -540,31 +540,40 @@
         </div>
         <div class="summary-delivery">
           <select name="delivery-collection" class="summary-delivery-selection">
-             <option value="Card" selected="selected">CardPayment</option>
+             <option value="Card" selected="selected">Pay With Paypal</option>
              <option value="COD">COD</option>
           </select><br>
           @if($totalamt< 750 && $totalamt!=0)
           <p><small>Delivery Charge : ₹50 </small></p>
+          @php($totalamt=$totalamt+50)
           @php($flag=1)
           @else
           <p><small>Delivery Charge: ₹0</small></p>
           @php($flag=0)
           @endif
         </div>
-        <div class="summary-total">
-          <div class="total-title">Total</div>
-          @if($flag==0)
-          <div class="total-value final-value" id="basket-total">₹{{$totalamt}}</div>
-          @else  
-          <div class="total-value final-value" id="basket-total">₹{{$totalamt+50}}</div>
+        
+          <div class="summary-total">
+            <div class="total-title">Total</div>
+            <div class="total-value final-value" id="basket-total">₹{{$totalamt}}</div>
+          </div>
+          @if(Session::has('error'))
+          <div class="alert alert-danger">{{Session::get('error') }}</div>
           @endif
-        </div>
-       
-        <div class="summary-checkout">
-          <button class="checkout-cta"><a href="/address"><span style="color:white">Go to Secure Checkout</span></a></button>
-        </div>
+
+          @if(Session::has('success'))
+          <div class="alert alert-success">{{Session::get('success') }}</div>
+          @endif
+          <div class="summary-checkout">
+            <!-- <form action="{{route('requestpayment')}}" method="post">
+            @csrf
+            <input type="hidden" name="amount" value="{{$totalamt}}"> -->
+            <button type="submit" class="checkout-cta"><a href="{{route('address',$totalamt) }}"><span style="color:white">Go to Secure Checkout</span></a></button>
+            <!-- </form> -->
+          </div>
       </div>
     </aside>
     @endif
 </div>
+<script src="https://www.paypal.com/sdk/js?client-id=env('PAYPAL_SANDBOX_CLIENT_ID')"></script>
 @endsection

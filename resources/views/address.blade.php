@@ -204,6 +204,7 @@
   <hr />
   <form action="/address_save" method="POST" class="form">
     @csrf
+    <input type="hidden" name="amount" value="{{$amt}}">
   <div class="fields fields--2">
     <label class="field">
       <small><span id="fnameerr" style="color:red;"></span></small>

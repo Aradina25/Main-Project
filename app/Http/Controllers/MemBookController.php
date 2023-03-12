@@ -301,6 +301,12 @@ class MemBookController extends Controller
         }
     }
 
+    public function address($amt){
+        $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
+        $user = tblregistration::where('userid',$data->userid)->first();
+        return view('address',compact('user','amt'));
+    }
+
     public function shippingaddress(Request $req){
         $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
         $user = tblregistration::where('userid',$data->userid)->first();
@@ -316,7 +322,7 @@ class MemBookController extends Controller
         foreach($cart as $c)
         {
             $stock = tblstock::where('stockid',$c->stockid)->first();
-            $totalamt= $totalamt+($c->qty*$stock->price);
+            $totalamt= $totalamt+($c->qty*(($stock->price)-(($stock->discount*$stock->price)/100)));
         }
         $order->totalamt = $totalamt;
         if($totalamt>750){
@@ -327,9 +333,10 @@ class MemBookController extends Controller
         }
         $order->save();
         $orders = tblorder::where('userid',$user->userid)->where('status',1)->first();
+        $amount = $req->amount;
         // return redirect('/paywithpaypal');
-        // return redirect('/paymentprocess');
-        return view('orderconfirmation',compact('user','ship','cart','orders'));
+        return redirect()->route('requestpayment',['amount' => $amount]);
+        // return view('orderconfirmation',compact('user','ship','cart','orders'));
     }
 
     public function generatePDF(){
@@ -346,13 +353,11 @@ class MemBookController extends Controller
     }
 
     public function paymentprocess(Request $request){
-        echo "hello";
-       Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-       Stripe\Charge::create([
-        "amount"=>100,
-        "currency"=>"USD",
-        "source"=>$request->stripeToken,
-        "description"=>"This is payment testing"]);
+        $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
+        $user = tblregistration::where('userid',$data->userid)->first();
+        $ship = tblshippingaddress::where('userid',$user->userid)->first();
+        $orders = tblorder::where('userid',$user->userid)->where('status',1)->first();
+        $cart = tblcart::where('userid',$user->userid)->get();
         return view('orderconfirmation',compact('user','ship','cart','orders'));
     }
     
