@@ -192,14 +192,28 @@
                 </div>
                 <br><br>
                 <div style="margin-left:50px;">
-                    <price><b>Price : ₹{{$thrift->maxprice}}</b></price>
-                    <form action="{{route('buythrift',['sellerid'=>$thrift->userid,'storeid'=>$thrift->id])}}" method="POST">
+                @if($thrift->userid== $user->userid)
+                    @if($thrift->status==0)
+                    <b>Book has been sold for ----</b>
+                    @elseif($thrift->status==1)
+                    <button type="submit" class="btn btn-success" style="width:100%">Start Auction</button>
+                    @elseif($thrift->status==2)
+                    <!-- <button type="submit" class="btn btn-success" style="width:100%" >Start Auction</button> -->
+                    <b>Auction is active</b>
+                    @else
+                    <button type="submit" class="btn btn-success" style="width:100%" >Start Auction</button>
+                    <b>Auction has been requested</b>
+                    @endif
+                @else
+                    <price><b>Place a bid any where not less than ₹{{$thrift->minprice}}</b></price>
+                    <form action="{{route('negothrift',['sellerid'=>$thrift->userid,'storeid'=>$thrift->id])}}" method="POST">
                     @csrf
-                        <negotiate style="margin-left:150px;"><b>Negotiate?</b> <input type="checkbox" name="yesnego" value="yes" onclick=negotiate() ></negotiate>
-                        <input  type="number" id="neg" value="{{$thrift->maxprice}}" min="{{$thrift->minprice}}" max="{{$thrift->maxprice}}" name="nego" onKeyDown="return false" style="margin-left:20px;" disabled>
-                        <button type="submit" class="btn btn-primary" style="margin-left:30px;" formaction="{{route('negothrift',['sellerid'=>$thrift->userid,'storeid'=>$thrift->id])}}" > REQUEST </button>
-                        <button type="submit" class="btn btn-success" style="margin-left:30px;" > BUY </button>
+                        <!-- <negotiate style="margin-left:150px;"><b>Negotiate?</b> <input type="checkbox" name="yesnego" value="yes" onclick=negotiate() ></negotiate> -->
+                        <input  type="number" id="neg" value="{{$thrift->minprice}}" min="{{$thrift->minprice}}" name="nego" onKeyDown="return false" style="margin-left:0px;">
+                        <!-- <button type="submit" class="btn btn-primary" style="margin-left:30px;" formaction="{{route('negothrift',['sellerid'=>$thrift->userid,'storeid'=>$thrift->id])}}" > REQUEST </button> -->
+                        <button type="submit" class="btn btn-success" style="margin-left:30px;" > BID </button>
                     </form>
+                @endif
                     <script type="text/javascript">
                         function negotiate(){
                             var neg = document.getElementById('neg');

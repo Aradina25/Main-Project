@@ -19,34 +19,41 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Item</th>
-      <th scope="col">Customer</th>
-      <th scope="col">Amount</th>
+      <!-- <th scope="col">Customer</th> -->
+      <th scope="col">Min Amount</th>
       <th scope="col">Status</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    @foreach($currentsales as $c)
+    @php($i=1)
+    @foreach($store as $store)
     <tr>
-      <th scope="row">1</th>
-      <td>{{$c->store->btitle}} - {{$c->store->bauthor}}</td>
-      <td><img src="{{asset('profilepictures/'.$c->pics->picture)}}" width="50px" height="50px" style="border-radius:50px;"></td>
-      <td>{{$c->negoamt}}</td>
-      <td>{{$c->action}}</td>
+      <th scope="row">{{$i}}</th>
+      <td>{{$store->btitle}} - {{$store->bauthor}}</td>
+      
+      <td>{{$store->minprice}}</td>
+      @if($store->status==0)
+      <td>Sold</td>
+      @elseif($store->status==1)
+      <td>In store</td>
+      @elseif($store->status==2)
+      <td>Biding Active</td>
+      @else
+      <td>Biding Requested</td>
+      @endif
       <td>
         <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Action
+            <button type="button" class="btn btn-primary" onclick="location.href='{{route('viewthrift',['accId'=>$store->bookid,'userid'=>$store->userid])}}'">
+                View
             </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{route('sellernego',['Id'=>$c->id,'action'=>'Accepted'])}}">Accept</a>
-                <a class="dropdown-item" href="{{route('sellernego',['Id'=>$c->id,'action'=>'Declined'])}}">Decline</a>
-            </div>
         </div>
       </td>
     </tr>
+    @php($i=$i+1)
     @endforeach
   </tbody>
 </table>
+
 </div>
 @endsection

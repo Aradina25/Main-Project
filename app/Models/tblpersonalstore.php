@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class tblpersonalstore extends Model
 {
     use HasFactory;
-    public $timestamps=false;
+    // public $timestamps=false;
 
     public function profile(){
         return $this->belongsTo(tblprofilepicture::class,'userid','userid');

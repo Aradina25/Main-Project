@@ -105,7 +105,7 @@ Route::match(array('GET','POST'),'/follow/{friendid}',[friendController::class,'
 //Thirft
 Route::match(array('GET','POST'),'/addtostore',[MemBookController::class,'addtostore'])->name('addtostore')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/viewthrift/{accId}/{userid}',[MemBookController::class,'thrift'])->name('viewthrift')->middleware('isLoggedIn');
-Route::match(array('GET','POST'),'/buythrift/{sellerid}/{storeid}',[MemBookController::class,'buythrift'])->name('buythrift')->middleware('isLoggedIn');
+// Route::match(array('GET','POST'),'/buythrift/{sellerid}/{storeid}',[MemBookController::class,'buythrift'])->name('buythrift')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/negothrift/{sellerid}/{storeid}',[MemBookController::class,'negothrift'])->name('negothrift')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/currsale',[MemBookController::class,'currsale'])->name('currsale')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/sellernego/{Id}/{action}',[MemBookController::class,'sellernego'])->name('sellernego')->middleware('isLoggedIn');

@@ -55,6 +55,9 @@
                 <center>
                 <form action="scan" method="POST" enctype="multipart/form-data"> 
                     @csrf
+                    @if(Session::has('noscan'))
+                    <div class="alert alert-danger" role="alert">{{Session::get('noscan')}}</div>
+                    @endif
                     <label for="file-input">
                     <span id="errcp"></span><br><img src="images/scan3.jpg" width="200px" heigth="200px" style="margin-top:50px;"  name="upload-icon" id="upload">
                     <input type="file" id="file-input" name="postimage" onchange="fileValidation()">

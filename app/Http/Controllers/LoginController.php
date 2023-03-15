@@ -67,7 +67,9 @@ class LoginController extends Controller
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$data->userid)->first();
             $order = tblorder::where('status',"<>",0)->get();
-            return view('AdDashboard', compact('data','user','order'));
+            $chart = DB::table('tblorders')->select(DB::raw('YEAR(placed_at) AS year, MONTH(placed_at) AS month, COUNT(*) AS sales'))->groupBy(DB::raw('YEAR(placed_at), MONTH(placed_at)'))->orderBy(DB::raw('YEAR(placed_at), MONTH(placed_at)'))->get();
+            // echo $chart;
+            return view('AdDashboard', compact('data','user','order','chart'));
         }       
     }
 

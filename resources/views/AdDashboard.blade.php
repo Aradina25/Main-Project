@@ -2,14 +2,71 @@
     <title>adminDasboard</title>
     <link rel="stylesheet" type="text/css" href="{{asset('addash.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
+       
+       google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+
+            ['Month','Number'],
+            @foreach($chart as $chart)
+            @if($chart->year == '2023')
+            @switch($chart->month)
+                @case(1)
+                    ['January',{{$chart->sales}}],
+                    @break
+
+                @case(2)
+                    ['February',{{$chart->sales}}],
+                    @break
+                
+                @case(3)
+                    ['March',{{$chart->sales}}],
+                    @break
+
+                @case(4)
+                    ['April',{{$chart->sales}}],
+                    @break
+                
+                @case(5)
+                    ['May',{{$chart->sales}}],
+                    @break
+            @endswitch
+            @endif
+            @endforeach
+            
+            ]);
+
+            var options = {
+            title: 'Sales Chart of the Year',
+            titleTextStyle: {
+                color: 'white',
+            },
+            
+            pieHole: 0,
+                pieSliceTextStyle: {
+                    color: 'black',
+                },
+                is3D: true,
+                backgroundColor: '#03528e',
+                legend: 'none'
+            };
+            var chart = new google.visualization.PieChart(document.getElementById("piechart"));
+            chart.draw(data,options);
+            }
+            
     </script>
     <style>
         body{
             font-family: cursive;
             background-color:rgba(6, 6, 6, 0.797);
         }
+
+        
     </style>
 
 </head>
@@ -24,10 +81,12 @@
                 <li  id="order"><a href="/adorders">ORDERS</a></li>
                 <li id="Logout"><a href="/logout">LOG OUT</a></li>
             </ul>
-    </div>
+        </div>
         <div id="dashboard"><br>
             <br><br><h2>DASHBOARD</h2><br>
-                   
+            <div class="container-fluid">
+            <div id="piechart" style="width: 100%; height: 250px;"></div>
+            </div><br>
                     <div id="box1" class="dash-box">
                         <img src="images/images.png" height="30px" width="30px"><br><br>
                         <table id="view-book-tab">
@@ -71,9 +130,10 @@
                     <!-- <div class="dash-box">
                         <img src="images/stock.png" height="30px" width="30px">
                         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos laboriosam ipsa illum, in impedit sapiente ab ullam</p><br>
-                    </div> <br> -->
+                    </div> <br> -->              
 
-           
+            <br>
+                      
         </div>
 
 </body>

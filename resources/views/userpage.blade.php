@@ -11,6 +11,7 @@
     body{
             background-image: url("images/bg.jpg");
             background-repeat: no-repeat;
+            background-attachment: fixed;
             background-size: cover;
         }
     #post-module{
@@ -201,7 +202,7 @@
                         <h6>Currently on store</h6>
                         <tr>
                         @foreach($tobesold as $t)
-                        <td><a href=""><img src="{{asset('coverpics/'.$t->frontcov)}}" alt="" style="width:50px;height:60px;"></a></td>
+                        <td><a href="/currsale"><img src="{{asset('coverpics/'.$t->frontcov)}}" alt="" style="width:50px;height:60px;"></a></td>
                         @endforeach
                         </tr>
                         <br>

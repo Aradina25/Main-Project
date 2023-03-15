@@ -28,7 +28,7 @@ class AdBookController extends Controller
         if(Session::has('loginId')){
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$data->userid)->first();
-            $bookdetails = tblbook::sortable()->paginate(7);
+            $bookdetails = tblbook::sortable()->paginate(10);
             $book = tblbook::all();
             $search= array();
             return view('AdminBook', compact('data','user','bookdetails','search','book'));

@@ -233,8 +233,8 @@
                       <input type="radio" id="star1" name="rating" value="1" />
                       <label for="star1" title="text">1 star</label>
                     </div><br><br>
-                    <textarea id="review" rows="5" cols="75" name="review" placeholder=" Enter your review"></textarea><br><br>
-                    <button class="btn btn-primary" style="width:700px;" onclick="location.href='/login'">Enter</button>
+                    <textarea id="review" rows="5" cols="82" name="review" placeholder=" Enter your review"></textarea><br><br>
+                    <button class="btn btn-success" style="width:700px;" onclick="location.href='/login'">Enter</button>
                 <br><br>
             @foreach($reviewtab as $posts)
             <article class="post">

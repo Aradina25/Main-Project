@@ -21,9 +21,10 @@ img2Char1 = pytesseract.image_to_string(adaptive_threshold)
 img2Char1 = ' '.join(img2Char1.split()[2:5])
 acc1 = sm(None,"THE KITE RUNNER",img2Char1).ratio()
 acc1 = acc1*100
-if acc1>acc:
-    searchText = img2Char1
-else:
-    searchText = img2Char
-
+# if acc1>acc:
+#     searchText = img2Char1
+# else:
+#     searchText = img2Char
+# searchText = img2Char
+searchText = img2Char1
 print(searchText)

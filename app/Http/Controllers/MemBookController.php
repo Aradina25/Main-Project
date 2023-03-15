@@ -443,25 +443,24 @@ class MemBookController extends Controller
             $tbr = tbllibrary::where('userid',$user->userid)->where('status',1)->get();
             $curr = tbllibrary::where('userid',$user->userid)->where('status',2)->get();
             $done = tbllibrary::where('userid',$user->userid)->where('status',3)->get(); 
-
         }
         return view('thriftpage', compact('user','thrift','challenge','tbr','curr','done','librarycheck','width','tobesold','soldbooks'));
     }
 
-    public function buythrift(Request $req,$sellerid,$storeid){
-        $addthrift = new tblthriftorder;
-        if(Session::has('loginId')){
-            $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
-            $user = tblregistration::where('userid',$data->userid)->first();
-            $addthrift->userid = $sellerid;
-            $addthrift->customerid = $user->userid;
-            $addthrift->personalstoreid = $storeid;
-            $addthrift->negotiate = $req->yesnego;
-            $addthrift->amount = $req->nego;
-            $addthrift->save();
-        }
-        return view('address');
-    }
+    // public function buythrift(Request $req,$sellerid,$storeid){
+    //     $addthrift = new tblthriftorder;
+    //     if(Session::has('loginId')){
+    //         $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
+    //         $user = tblregistration::where('userid',$data->userid)->first();
+    //         $addthrift->userid = $sellerid;
+    //         $addthrift->customerid = $user->userid;
+    //         $addthrift->personalstoreid = $storeid;
+    //         $addthrift->negotiate = $req->yesnego;
+    //         $addthrift->amount = $req->nego;
+    //         $addthrift->save();
+    //     }
+    //     return view('address');
+    // }
 
     public function negothrift(Request $req,$sellerid,$storeid){
         $negthrift = new tblthriftnegotiate;
@@ -495,8 +494,9 @@ class MemBookController extends Controller
             $tbr = tbllibrary::where('userid',$user->userid)->where('status',1)->get();
             $curr = tbllibrary::where('userid',$user->userid)->where('status',2)->get();
             $done = tbllibrary::where('userid',$user->userid)->where('status',3)->get(); 
-        $currentsales = tblthriftnegotiate::where('sellerid',$user->userid)->where('status',1)->get();
-        return view('thriftsales', compact('user','width','challenge','tbr','curr','done','librarycheck','tobesold','soldbooks','currentsales'));
+            $store = tblpersonalstore::where('userid',$user->userid)->get();
+        // $currentsales = tblthriftnegotiate::where('sellerid',$user->userid)->where('status',1)->get();
+        return view('thriftsales', compact('user','width','challenge','tbr','curr','done','librarycheck','tobesold','soldbooks','store'));
     }
 
     public function sellernego($Id,$action){

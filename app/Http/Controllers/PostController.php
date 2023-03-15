@@ -95,14 +95,11 @@ class PostController extends Controller
             $text = substr($text, 0, -1);
             // echo $text;
             $viewbook = tblbook::where('title','like', '%'.$text.'%')->first();
+            if($viewbook==""){
+                return back()->with('noscan','The book is not available');
+            }
             // echo $viewbook;
-            if( File::delete($path))
-            {
-                echo "done";
-            }
-            else{
-                echo $path;
-            }
+            File::delete($path);
             $reviewtab = tblreview::where('bookid',$viewbook->accession_no)->get();
             $pricehc = tblstock::where('accession_no',$viewbook->accession_no)->where('type','Hardcover')->first();
             $pricepb = tblstock::where('accession_no',$viewbook->accession_no)->where('type','Paperback')->first();

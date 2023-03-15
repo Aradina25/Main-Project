@@ -170,7 +170,7 @@
                     <button type="submit">SEARCH</button>
                 </form>
                 @if(Session('status'))
-                        <span style="color:red">{{Session('status')}}</span>
+                <div class="alert alert-success" role="alert" style="margin-left: 150px;width: 500px;">{{Session::get('status')}}</div>
                 @endif
                 <br>
                 <table id="view-book-tab">
@@ -213,6 +213,7 @@
                     @endif
                     </tbody>
                 </table>
+                <br><br>
         </div>
     </div>
 </body>
