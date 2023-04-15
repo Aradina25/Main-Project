@@ -6,9 +6,64 @@
 @section('comptgoal',$challenge->completedgoal)
 @section('goal',$challenge->goal)
 <style>
-    .bookpics{
-        margin-left:50px;
+
+    img {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+img:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+#image-viewer {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 30;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 50%;
+    max-width: 700px;
+}
+.modal-content { 
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+#image-viewer .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+#image-viewer .close:hover,
+#image-viewer .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
     }
+}
 </style>
 @section('content')
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -152,12 +207,29 @@
                 <h5><b><u>My Review</u></b></h5><br>
                 <p>{{$thrift->summary}}</p>
                 <h5><b><u>Gallery</u></b></h5><br>
-                <img src="{{asset('coverpics/'.$thrift->frontcov)}}" class="bookpics" class="bp1" width="70px" height="100px" onclick="zoom()">
-                <img src="{{asset('coverpics/'.$thrift->backcov)}}" class="bookpics" width="70px" height="100px" onclick="zoom()">
-                <img src="{{asset('coverpics/'.$thrift->page1)}}" class="bookpics" width="70px" height="100px" onclick="zoom()">
-                <img src="{{asset('coverpics/'.$thrift->page2)}}" class="bookpics" width="70px" height="100px" onclick="zoom()">
-                <img src="{{asset('coverpics/'.$thrift->page3)}}" class="bookpics" width="70px" height="100px" onclick="zoom()">
+                <div class="images">&times;
+                <img src="{{asset('coverpics/'.$thrift->frontcov)}}" width="70px" height="100px" style="margin-left:50px;" onclick="zoomImage()">
+                <img src="{{asset('coverpics/'.$thrift->backcov)}}" width="70px" height="100px" style="margin-left:50px;" onclick="zoom()">
+                <img src="{{asset('coverpics/'.$thrift->page1)}}"   width="70px" height="100px" style="margin-left:50px;" onclick="zoom()">
+                <img src="{{asset('coverpics/'.$thrift->page2)}}"   width="70px" height="100px" style="margin-left:50px;" onclick="zoom()">
+                <img src="{{asset('coverpics/'.$thrift->page3)}}"  width="70px" height="100px" style="margin-left:50px;" onclick="zoom()">
+                </div>
+                <div id="image-viewer">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="full-image">
+                    </div>
                 </content>
+                <script>
+                  $(".images img").click(function(){
+                    $("#full-image").attr("src", $(this).attr("src"));
+                    $('#image-viewer').show();
+                    });
+
+                    $("#image-viewer .close").click(function(){
+                    $('#image-viewer').hide();
+                    });
+
+                </script>
                 <br><br>
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
@@ -192,18 +264,33 @@
                 </div>
                 <br><br>
                 <div style="margin-left:50px;">
+                <h5>Requests</h5><br>
                 @if($thrift->userid== $user->userid)
-                    @if($thrift->status==0)
-                    <b>Book has been sold for ----</b>
-                    @elseif($thrift->status==1)
-                    <button type="submit" class="btn btn-success" style="width:100%">Start Auction</button>
-                    @elseif($thrift->status==2)
-                    <!-- <button type="submit" class="btn btn-success" style="width:100%" >Start Auction</button> -->
-                    <b>Auction is active</b>
-                    @else
-                    <button type="submit" class="btn btn-success" style="width:100%" >Start Auction</button>
-                    <b>Auction has been requested</b>
-                    @endif
+                <table class="table" id="sales-tab" style="background-color:white;">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Requested By</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php($i=1)
+                        @foreach($thriftneg as $thriftneg)
+                        <tr>
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$thriftneg->detail->fullname}}</td>
+                        <td>{{$thriftneg->negoamt}}</td>
+                        <td>
+                        <a href="{{route('thriftreq', ['id' => $thriftneg->id, 'stat' => 2])}}"><span id="boot-icon" class="bi bi-check" style="font-size: 18px; color: rgb(0, 128, 55); -webkit-text-stroke-width: 0px;"></span></a>
+                        <a href="{{route('thriftreq',['id' => $thriftneg->id, 'stat' => 0])}}"><span id="boot-icon" class="bi bi-x" style="font-size: 18px; color: rgb(255, 0, 0);"></span></a>
+                        </td>
+                        </tr>
+                        @php($i=$i+1)
+                        @endforeach
+                    </tbody>
+                    </table>
                 @else
                     <price><b>Place a bid any where not less than ₹{{$thrift->minprice}}</b></price>
                     <form action="{{route('negothrift',['sellerid'=>$thrift->userid,'storeid'=>$thrift->id])}}" method="POST">

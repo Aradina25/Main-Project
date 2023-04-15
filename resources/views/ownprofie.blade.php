@@ -187,11 +187,11 @@
         </div>
         
         <div id="mid-view" class="child-element" style="width:700px;margin-left:20%;margin-top:20px;">
-        <div style="border-bottom:3px solid #98AE42;background:white;">  
-            <div style="display:inline-block;vertical-align:top;border-radius:50%;">
+        <div style="border-bottom:3px solid #98AE42;background:white;height:170px;">  
+            <div style="float:left;vertical-align:top;border-radius:50%;margin-top:10px;">
                 <image id="profileImage" src="{{ asset('profilepictures/'.$profile->picture)}}" style="width:150px;height:150px;border-radius: 50%;"><br>
             </div>
-            <div style="display:inline-block;margin-left:5%;margin-top:5%;">
+            <div style="margin-left:5%;margin-top:10px;">
                 <h2>{{$user->fullname}}</h2>
                 <h5>{{$profile->bio}}</h5>
                 <p style="float:left;"><b>Level : {{$profile->level}}</b></p>

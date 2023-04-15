@@ -372,6 +372,7 @@
     }
     }
 
+
     @media screen and (max-width: 960px) {
     main {
         width: 100%;
@@ -541,7 +542,7 @@
         <div class="summary-delivery">
           <select name="delivery-collection" class="summary-delivery-selection">
              <option value="Card" selected="selected">Pay With Paypal</option>
-             <option value="COD">COD</option>
+             <!-- <option value="COD">COD</option> -->
           </select><br>
           @if($totalamt< 750 && $totalamt!=0)
           <p><small>Delivery Charge : ₹50 </small></p>
@@ -551,12 +552,33 @@
           <p><small>Delivery Charge: ₹0</small></p>
           @php($flag=0)
           @endif
+          @php($coins = $profile->coins)
+          <reward><input type="checkbox" id="c" name="yesrewards" value="yes" style="margin-top:5px;"><span> Apply reward coins?</span></reward>
+          
         </div>
-        
           <div class="summary-total">
             <div class="total-title">Total</div>
             <div class="total-value final-value" id="basket-total">₹{{$totalamt}}</div>
           </div>
+          <script type="text/javascript">
+            const checkbox = document.getElementById('c');
+
+            checkbox.addEventListener('click', () => {
+              if (checkbox.checked) {
+                var totalamt = <?php echo json_encode($totalamt); ?>; 
+                var coins = <?php echo json_encode($coins); ?>;
+                if(totalamt >= coins)
+                  totalamt = totalamt-coins;
+                else
+                  totalamt = 1;
+                document.getElementById('basket-total').innerHTML = "₹"+totalamt;
+              }
+              else{
+                var totalamt = <?php echo json_encode($totalamt); ?>; 
+                document.getElementById('basket-total').innerHTML = "₹"+totalamt;
+              }
+            });
+          </script>
           @if(Session::has('error'))
           <div class="alert alert-danger">{{Session::get('error') }}</div>
           @endif

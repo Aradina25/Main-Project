@@ -1,38 +1,61 @@
 @extends('layouts.usertemp')
 @extends('layouts.sidebar')
-@section('title','Search results for '.$s)
+@section('title','HOME')
 @section('username',$user->fullname)
 @section('width',$width)
 @section('comptgoal',$challenge->completedgoal)
 @section('goal',$challenge->goal)
-@section('tbr',count($tbr))
-@section('curr',count($curr))
-@section('done',count($done))
-<head>
-   <style>
+@section('picture',$profile->picture)
 
-        #mini-cov-pic{
-            width:50px;
-            height:70px;
-        }
+<style>
+     
+    article{
+        border-left:3px solid #a21b24;
+    }
+    .info{
+        color: #aaa;
+        font-style: italic;
+    }
+    
 
-        #dashboard #view-book-tab{
-            border-collapse: collapse;
-            /* width:600px; */
-        }
+    #whats-on-mind{
+        margin-top:10px;
+        margin-left:10px;
+        width:470px;
+        height:120px;
+        border:none;
+    }
 
-        #dashboard #view-book-tab td{
-            padding: 10px;
-        }
+    #whats-on-mind{
+        overflow: auto;
+        outline: none;
 
-        #spec-book-tab td{
-            padding:50px;
-        }
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
 
-   </style>
-</head>
+        resize: none;
+    }
+    #upload-icon{
+        border:1px solid black;
+    }
+
+    #file-input{
+        display:none;
+    }
+    #upload{
+        margin-top:20px;
+    }
+    #upload-btn{
+        margin-top:20px;
+    }
+    /* #addyourstoremodal{
+        
+    max-width: 80%;
+    } */
+</style>
+
 @section('content')
-<div id="dashboard">
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -88,7 +111,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                <div class="book-list">
+                    <div class="book-list">
                         <h6>To Be Read</h6>
                         <tr>
                         @foreach($tbr as $t)
@@ -116,6 +139,7 @@
                         <td><a href="https://online.fliphtml5.com/lunzf/oxuu/"><img src="{{asset('coverpics/1663776805cp.jpg')}}" style="width:50px;height:60px;"></a></td>
                     </div>
                 </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="window.location='{{ url('/memsearch') }}'">Add More to Library</button>
@@ -134,7 +158,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="book-list">
-                        <h6>Currently on store</h6>
+                        <h6> Currently on store </h6>
                         <tr>
                         @foreach($tobesold as $t)
                         <td><a href=""><img src="{{asset('coverpics/'.$t->frontcov)}}" alt="" style="width:50px;height:60px;"></a></td>
@@ -142,7 +166,7 @@
                         </tr>
                         <br>
                         <br>
-                        <h6>Sold</h6>
+                        <h6> Sold  </h6>
                         <tr>
                         @foreach($soldbooks as $s)
                         <td><a href=""><img src="{{asset('coverpics/'.$s->frontcov)}}" alt="" style="width:50px;height:60px;"></a></td>
@@ -150,7 +174,7 @@
                         </tr>
                         <br>
                         <br>
-                        
+                        <h6><a href="/currsale">Click to view current sales</a></h6>
                     </div>
                 </div>
                 
@@ -161,39 +185,13 @@
                 </div>
             </div>
         </div>
-    <div id="mid-view" class="child-element">
-        <table id="view-book-tab">
-            <tbody>
-                @if(count($search)>0)
-                    @foreach($search as $book)
-                    <tr>
-                        <td rowspan="2"><img src="{{ asset('coverpics/'.$book->cov_pic)}}" id="mini-cov-pic"></td>
-                        <td colspan="3"><b>{{$book->title}} - {{$book->author}}</b></td>
-                    </tr>
-                    <tr>
-                        <td>{{$book->genre}} -
-                        </td>
-                        <form action="{{route('memviewbook',$book->accession_no)}}" method="POST">
-                        @csrf
-                        <td><button type="submit" class="btn btn-primary">MORE</button></td>
-                        </form>
-                        <td><div class="btn-group">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:150px;">
-                        Save to Library
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{route('markbook',['accId'=>$book->accession_no,'stat'=>1])}}">Want to Read</a>
-                        <a class="dropdown-item" href="{{route('markbook',['accId'=>$book->accession_no,'stat'=>2])}}">Currently Reading</a>
-                        <a class="dropdown-item" href="{{route('markbook',['accId'=>$book->accession_no,'stat'=>3])}}">Read</a>
-                    </div>
-                </div>
-            </div></td>
-                    </tr>
-                    @endforeach
-                @endif
-                @if(count($searchp)>0)
-                    @foreach($searchp as $user)
-                            @if(count($follow)>0)
+        
+        <div id="mid-view" class="child-element" style="width:700px;margin-left:20%;margin-top:20px;">
+        <div style="border-bottom:3px solid #98AE42;background:white;height:170px;">  
+            <div style="float:left;vertical-align:top;border-radius:50%;margin-top:10px;">
+                <image id="profileImage" src="{{ asset('profilepictures/'.$profile->picture)}}" style="width:150px;height:150px;border-radius: 50%;"><br>
+            </div>
+            @if(count($follow)>0)
                                 @foreach($follow as $follow)
                                     @if($follow->friendid == $user->userid)
                                         @php($button = "Unfollow")
@@ -201,32 +199,88 @@
                                         @php($button = "Follow")
                                     @endif
                                 @endforeach
-                            @else
-                                @php($button = "Follow")
-                            @endif
-                            <tr>
-                                <td rowspan="2"><img src="{{ asset('profilepictures/'.$user->pics->picture)}}" style="border-radius:50%;width:100px;height:100px;"></td>
-                                <td colspan="3"><b>{{$user->fullname}} - Level {{$user->pics->level}} </b></td>
-                            </tr>
-                        <tr>
-                            <td>{{$user->pics->bio}}</td>
-                            <td>
-                            <form action="{{route('follow',$user->userid)}}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-success" name="follow" id="follow">{{$button}}</button>
-                            
-                            <button type="submit" class="btn btn-primary" formaction="{{route('friendprofile',$user->userid)}}">VIEW</button>
-                            </form>    
-                        </td>
+            @else
+                    @php($button = "Follow")
+            @endif
+            <div style="margin-left:5%;margin-top:10px;">
+                <h2>{{$frnd->fullname}}</h2>
+                <h5>{{$profile->bio}}</h5>
+                <p style="float:left;"><b>Level : {{$profile->level}}</b></p>
+                <p style="margin-left:200px;"><b>Reward coins available : {{$profile->coins}}</b></p>
+                <form action="{{route('follow',$user->userid)}}" method="POST">
+                @csrf
+                    <button type="submit" class="btn btn-outline-success" name="follow" id="follow">{{$button}}</button>
+                </form>
+                </div>      
+        </div>  
+            @if(count($posts)>0)
+
+            <h3 style="margin-top:5%;">Posts</h3><br>
+            @foreach($posts as $posts)
+            @php($postid = $posts->postid)
+            <article class="post">
+                <div class="card mb-3" style="max-width: 700px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <image id="posts" src="{{ asset('posts/'.$posts->image)}}" style="width:150px;height:100%;"><br>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <!-- <li class="icons dropdown"> -->
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown" style="margin-left:400px;">
+                                <span class="activity active"></span>
+                                <img src="{{ asset('images/threedots.jpg')}}" height="20" width="40" alt="options">
                             </div>
-                        </tr>
-                        
-                    @endforeach
-                @endif
-                
-            </tbody>
-        </table>
-    </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        @if($posts->status == 1)
+                                        <li><a data-id="{{$postid}}" data-toggle="modal" data-target="#editposts" class="editposts" style="color:black;cursor:pointer" >Edit</a></li>
+                                        @endif
+                                        <li><a href="{{route('deletepost',$postid)}}" style="color:black;cursor:pointer">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                                <br>
+                                <p class="card-text">{{$posts->body}}</p>
+                                <p class="card-text"><small class="text-muted">You posted this on {{$posts->created_at}}</small></p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            @endforeach 
+        @endif  
+        </div>
+        <div class="modal fade" id="editposts" tabindex="-1" role="dialog" aria-labelledby="editpostsTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editpostsTitle">EDIT POST</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    
+                </div>
+                <div class="modal-body">
+                <form action="/editposts" method="POST" enctype="multipart/form-data"> 
+                @csrf
+                    <textarea id="whats-on-mind" name="editwom" placeholder="Whats on your mind...." ></textarea><br>
+                    <label for="file-input">
+                    <span id="errcp"></span><br><img src="images/post.png" name="upload-icon" id="upload" style="width:50px; height:50px;" >
+                    <input type="file" id="file-input" name="editimage" onchange="fileValidation()">
+                    </label>
+                    <!-- <input type="text" id="id" name="id" value="{{}}"> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">UPLOAD</button>
+                    </form>  
+                </div>
+                </div>
+            </div>
+        </div> 
+
         
-</div>
 @endsection

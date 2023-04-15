@@ -266,8 +266,9 @@ class MemBookController extends Controller
         if(Session::has('loginId')){
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$data->userid)->first();
-            $cart = tblcart::where('userid',$user->userid)->get(); 
-            return view('cart',compact('user','cart'));
+            $cart = tblcart::where('userid',$user->userid)->where('status',1)->get(); 
+            $profile = tblprofilepicture::where('userid',$user->userid)->first();
+            return view('cart',compact('user','cart','profile'));
         }
     }
 
@@ -353,10 +354,13 @@ class MemBookController extends Controller
     }
 
     public function paymentprocess(Request $request){
+        $carti = new tblcart;
         $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
         $user = tblregistration::where('userid',$data->userid)->first();
         $ship = tblshippingaddress::where('userid',$user->userid)->first();
         $orders = tblorder::where('userid',$user->userid)->where('status',1)->first();
+        tblcart::where('userid',$user->userid)->update(['status'=>0]);
+        $carti->update();
         $cart = tblcart::where('userid',$user->userid)->get();
         return view('orderconfirmation',compact('user','ship','cart','orders'));
     }
@@ -429,6 +433,7 @@ class MemBookController extends Controller
             $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
             $user = tblregistration::where('userid',$data->userid)->first();
             $thrift = tblpersonalstore::where('userid',$userid)->where('bookid',$accId)->first();
+            $thriftneg = tblthriftnegotiate::where('sellerid',$userid)->where('status',1)->get();
             $challenge = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
             if($challenge->goal==0){
                 $width=0;
@@ -444,7 +449,7 @@ class MemBookController extends Controller
             $curr = tbllibrary::where('userid',$user->userid)->where('status',2)->get();
             $done = tbllibrary::where('userid',$user->userid)->where('status',3)->get(); 
         }
-        return view('thriftpage', compact('user','thrift','challenge','tbr','curr','done','librarycheck','width','tobesold','soldbooks'));
+        return view('thriftpage', compact('user','thrift','challenge','tbr','curr','done','librarycheck','width','tobesold','soldbooks','thriftneg'));
     }
 
     // public function buythrift(Request $req,$sellerid,$storeid){
@@ -499,14 +504,10 @@ class MemBookController extends Controller
         return view('thriftsales', compact('user','width','challenge','tbr','curr','done','librarycheck','tobesold','soldbooks','store'));
     }
 
-    public function sellernego($Id,$action){
-        $negthrift = new tblthriftnegotiate;
-        if(Session::has('loginId')){
-            $data =  tbllogin::where('loginid',"=",Session::get('loginId'))->first();
-            $user = tblregistration::where('userid',$data->userid)->first();
-            tblthriftnegotiate::where('id',$Id)->where('status',1)->update(['action'=>$action]);
-            $negthrift->update();
-        }
+    public function thriftaction($id,$stat){
+        $treq = new tblthriftnegotiate;
+        tblthriftnegotiate::where('id',$id)->update(['status'=>$stat]);
+        $treq->update();
         return redirect()->back();
     }
 

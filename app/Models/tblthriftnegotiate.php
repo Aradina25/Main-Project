@@ -9,9 +9,12 @@ class tblthriftnegotiate extends Model
 {
     use HasFactory;
     public $timestamps=false;
-
     public function pics(){
         return $this->belongsTo(tblprofilepicture::class,'customerid','userid');
+    }
+
+    public function detail(){
+        return $this->belongsTo(tblregistration::class,'customerid','userid');
     }
 
     public function store(){

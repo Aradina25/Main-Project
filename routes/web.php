@@ -101,6 +101,7 @@ Route::match(array('GET','POST'),'/deletepost/{postid}',[PostController::class,'
 
 //friend connection
 Route::match(array('GET','POST'),'/follow/{friendid}',[friendController::class,'follow'])->name('follow')->middleware('isLoggedIn');
+Route::match(array('GET','POST'),'/friendprofile/{friendid}',[friendController::class,'friendprofileview'])->name('friendprofile')->middleware('isLoggedIn');
 
 //Thirft
 Route::match(array('GET','POST'),'/addtostore',[MemBookController::class,'addtostore'])->name('addtostore')->middleware('isLoggedIn');
@@ -108,7 +109,7 @@ Route::match(array('GET','POST'),'/viewthrift/{accId}/{userid}',[MemBookControll
 // Route::match(array('GET','POST'),'/buythrift/{sellerid}/{storeid}',[MemBookController::class,'buythrift'])->name('buythrift')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/negothrift/{sellerid}/{storeid}',[MemBookController::class,'negothrift'])->name('negothrift')->middleware('isLoggedIn');
 Route::match(array('GET','POST'),'/currsale',[MemBookController::class,'currsale'])->name('currsale')->middleware('isLoggedIn');
-Route::match(array('GET','POST'),'/sellernego/{Id}/{action}',[MemBookController::class,'sellernego'])->name('sellernego')->middleware('isLoggedIn');
+Route::match(array('GET','POST'),'/thriftreq/{id}/{stat}',[MemBookController::class,'thriftaction'])->name('thriftreq')->middleware('isLoggedIn');
 
 //bot
 use App\Http\Controllers\BotManController;
