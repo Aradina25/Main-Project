@@ -545,6 +545,7 @@
              <!-- <option value="COD">COD</option> -->
           </select><br>
           @if($totalamt< 750 && $totalamt!=0)
+          <p style="color:red;font-size:10px;">Buy for  ₹750 or above to avoid delivery charge!!</p>
           <p><small>Delivery Charge : ₹50 </small></p>
           @php($totalamt=$totalamt+50)
           @php($flag=1)

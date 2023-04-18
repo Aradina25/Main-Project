@@ -194,9 +194,9 @@
             @if(count($follow)>0)
                                 @foreach($follow as $follow)
                                     @if($follow->friendid == $user->userid)
-                                        @php($button = "Unfollow")
-                                    @else
                                         @php($button = "Follow")
+                                    @else
+                                        @php($button = "Unfollow")
                                     @endif
                                 @endforeach
             @else
@@ -207,7 +207,7 @@
                 <h5>{{$profile->bio}}</h5>
                 <p style="float:left;"><b>Level : {{$profile->level}}</b></p>
                 <p style="margin-left:200px;"><b>Reward coins available : {{$profile->coins}}</b></p>
-                <form action="{{route('follow',$user->userid)}}" method="POST">
+                <form action="{{route('follow',$frnd->userid)}}" method="POST">
                 @csrf
                     <button type="submit" class="btn btn-outline-success" name="follow" id="follow">{{$button}}</button>
                 </form>

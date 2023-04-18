@@ -31,6 +31,7 @@ class friendController extends Controller
                 tblfriend::where('userid',$user->userid)->where('friendid',$friendid)->update(['approved'=>0]);
             else
                 tblfriend::where('userid',$user->userid)->where('friendid',$friendid)->update(['approved'=>1]);
+            $follow->update(); 
         }
         
         return redirect()->back();
