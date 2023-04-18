@@ -20,7 +20,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "srmklive/paypal": "^3.0",
-        "thiagoalessio/tesseract_ocr": "^2.12"
+        "thiagoalessio/tesseract_ocr": "^2.12",
+        "tightenco/collect": "^8.83"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

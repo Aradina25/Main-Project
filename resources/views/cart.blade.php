@@ -587,11 +587,7 @@
           <div class="alert alert-success">{{Session::get('success') }}</div>
           @endif
           <div class="summary-checkout">
-            <!-- <form action="{{route('requestpayment')}}" method="post">
-            @csrf
-            <input type="hidden" name="amount" value="{{$totalamt}}"> -->
             <button type="submit" class="checkout-cta"><a href="{{route('address',$totalamt) }}"><span style="color:white">Go to Secure Checkout</span></a></button>
-            <!-- </form> -->
           </div>
       </div>
     </aside>

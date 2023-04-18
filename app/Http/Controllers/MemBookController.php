@@ -183,6 +183,12 @@ class MemBookController extends Controller
         $lib->accession_no=$accId;
         $lib->status=3;
         $lib->save();
+        $chal = new tblchallenge;
+        $challenge = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
+        $librarycheck =  tbllibrary::where('userid',$user->userid)->where('status',3)->where('updated_at','>=',$challenge->Createdat)->get();
+        tblchallenge::where('userid',$user->userid)->where('status',1)->update(['completedgoal'=>count($librarycheck)]);
+        $chal->update();
+        $this->challenge_success();
         // $challengecheck = tblchallenge::where('userid',$user->userid)->where('status',1)->first();
         // $librarycheck =  tbllibrary::where('userid',$user->userid)->where('updated_at','>=',$challengecheck->Createdat)->get();
         return $this->ownprofileview();
